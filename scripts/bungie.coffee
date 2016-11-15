@@ -124,9 +124,9 @@ checkNetwork = (network) ->
 checkClass = (character) ->
   if character is 'warlock'
     return '2271682572'
-  else if character is 'titan'
-    return '671679327'
   else if character is 'hunter'
+    return '671679327'
+  else if character is 'titan'
     return '3655393761'
   else
     return null
@@ -208,7 +208,6 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
       return
 
     data = response.data
-    console.log data.characters
 
     if characterClass != null
       characters = data.characters.filter (character) ->
@@ -216,10 +215,7 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
     else
       characters = data.characters
 
-    console.log(characters)
     character = characters[0]
-
-    console.log(character)
 
     if !character
         robot.send {room: bot.message.user.name, "unfurl_media": false}, "Sorry, I cannot find a character of the specified class."
