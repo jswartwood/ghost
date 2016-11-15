@@ -43,13 +43,13 @@ module.exports = (robot) ->
       data['displayName'] = input[0]
     else if input.length is 2
       # assume xbox
-      data['membershipType'] = 1
+      data['membershipType'] = '1'
       # assume first input was gamertag
       data['displayName'] = input[0]
     else if input.length is 1
       # assume only weaponSlot was provided
       # assume xbox
-      data['membershipType'] = 1
+      data['membershipType'] = '1'
       # assume username match
       data['displayName'] = res.message.user.name
     else
