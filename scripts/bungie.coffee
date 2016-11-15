@@ -212,7 +212,7 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
 
     if characterClass != null
       characters = data.characters.filter (character) ->
-          character.characterBase.classHash == characterClass
+          character.characterBase.classHash.toString() == characterClass
     else
       characters = data.characters
 
