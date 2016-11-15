@@ -36,20 +36,30 @@ module.exports = (robot) ->
       data['weaponSlot'] = weaponSlot
 
     # interprets input based on length
-    # if 3 elements, assume: gamertag, network, weaponSlot
+    # if 3 elements, assume: gamertag, character, network, weaponSlot
+    if input.length is 4
+      data['membershipType'] = checkNetwork(input[1].toLowerCase())
+      data['characterClass'] = checkClass(input[2].toLowerCase())
+      data['displayName'] = input[0]
     if input.length is 3
-      el = input[1].toLowerCase()
-      data['membershipType'] = checkNetwork(el)
+      data['characterClass'] = checkClass(input[1].toLowerCase())
+      if data['characterClass'] == null
+        data['membershipType'] = checkNetwork(input[1].toLowerCase())
+      else
+        # if the second input is a class, assume xbox
+        data['membershipType'] = '1'
       data['displayName'] = input[0]
     else if input.length is 2
       # assume xbox
       data['membershipType'] = '1'
+      data['characterClass'] = null
       # assume first input was gamertag
       data['displayName'] = input[0]
     else if input.length is 1
       # assume only weaponSlot was provided
       # assume xbox
       data['membershipType'] = '1'
+      data['characterClass'] = null
       # assume username match
       data['displayName'] = res.message.user.name
     else
@@ -59,7 +69,7 @@ module.exports = (robot) ->
       return
 
     tryPlayerId(res, data.membershipType, data.displayName, robot).then (player) ->
-      getCharacterId(res, player.platform, player.membershipId, robot).then (characterId) ->
+      getCharacterId(res, player.platform, player.membershipId, data.characterClass, robot).then (characterId) ->
         getItemIdFromSummary(res, player.platform, player.membershipId, characterId, data.weaponSlot).then (itemInstanceId) ->
           getItemDetails(res, player.platform, player.membershipId, characterId, itemInstanceId).then (item) ->
             parsedItem = dataHelper.parseItemAttachment(item)
@@ -105,6 +115,22 @@ checkNetwork = (network) ->
     return '1'
   else if network in playstation
     return '2'
+  else
+    return null
+
+checkClass = (character) ->
+  classes = ['warlock', 'titan', 'hunter']
+  if character in classes
+    return character
+  else
+    return null
+
+  if slot is 'warlock'
+    return '1498876634'
+  else if slot is 'titan'
+    return '2465295065'
+  else if slot is 'hunter'
+    return '953998645'
   else
     return null
 
@@ -174,7 +200,7 @@ getPlayerId = (res, membershipType, displayName, robot) ->
   deferred.promise
 
 # Gets characterId for last played character
-getCharacterId = (bot, membershipType, playerId, robot) ->
+getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
   deferred = new Deferred()
   endpoint = "#{membershipType}/Account/#{playerId}"
 
@@ -186,6 +212,8 @@ getCharacterId = (bot, membershipType, playerId, robot) ->
 
     data = response.data
     character = data.characters[0]
+
+    console.log(data.characters)
 
     characterId = character.characterBase.characterId
     deferred.resolve(characterId)
