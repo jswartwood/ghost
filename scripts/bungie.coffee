@@ -9,8 +9,6 @@ helpText = "Use the \"help\" command to learn about using the bot, or check out 
 module.exports = (robot) ->
   # executes when any text is directed at the bot
   robot.respond /(.*)/i, (res) ->
-    console.log(res.message.user);
-    console.log(res.message.user.slack.profile);
     if /help/i.test(res.match[1])
       return
 
@@ -53,7 +51,7 @@ module.exports = (robot) ->
       # assume xbox
       data['membershipType'] = 1
       # assume username match
-      data['displayName'] = res.message.user.slack.profile.id
+      data['displayName'] = res.message.user.name
     else
       # catch all, but should never happen...
       message = "Something didn't look right... #{helpText}"
@@ -70,7 +68,6 @@ module.exports = (robot) ->
               message: res.message
               attachments: parsedItem
 
-            console.log payload
             robot.emit 'slack-attachment', payload
 
   robot.respond /help/i, (res) ->
