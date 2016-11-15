@@ -210,13 +210,16 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
     data = response.data
 
     if characterClass != null
-      character = data.characters.filter((character) -> character.characterBase.classHash == characterClass)[0]
+      characters = data.characters.filter (character) ->
+          character.characterBase.classHash == characterClass
     else
-      character = data.characters[0]
+      characters = data.characters
+
+    character = characters[0]
 
     console.log(data.characters)
 
-    if character == null
+    if !character
         robot.send {room: bot.message.user.name, "unfurl_media": false}, "Sorry, I cannot find a character of the specified class."
         deferred.reject()
         return
