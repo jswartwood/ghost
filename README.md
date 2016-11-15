@@ -1,3 +1,5 @@
+...currently this project is just a clone of Showoff, but will eventually incorporate additional features, tweak some assumptions for existing functionality, etc.
+
 # Showoff (aka Gunsmith Bot)
 
 Showoff is a slack bot based on the [hubot](https://hubot.github.com/) framework, designed to make it easy for users to show off their Destiny weapons in slack. The goal is to enable users to share weapon information with as few inputs as possible.  
@@ -41,5 +43,5 @@ First clone the repo locally:
 > git clone git@github.com:phillipspc/showoff.git
 
 To deploy to heroku, cd into the newly created folder then follow the steps [here](https://github.com/slackhq/hubot-slack) under "Deploying to Heroku" (minus the part about creating a local hubot).  
-You'll also need to add your [Bungie Api Key](https://www.bungie.net/en-US/User/API) to the config variables: 
+You'll also need to add your [Bungie Api Key](https://www.bungie.net/en-US/User/API) to the config variables:
 > heroku config:set BUNGIE_API_KEY=your-key-here

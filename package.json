@@ -1,9 +1,9 @@
 {
-  "name": "showoff",
+  "name": "prison-phone-bot",
   "version": "0.0.0",
   "private": true,
-  "author": "Peter Phillips <phillipspc@gmail.com>",
-  "description": "A slack bot to show off Destiny items.",
+  "author": "Jacob Swartwood <jswartwood@gmail.com>",
+  "description": "A slack bot destiny Destiny.",
   "dependencies": {
     "coffee-script": "^1.10.0",
     "dotenv": "^2.0.0",
