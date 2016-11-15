@@ -9,6 +9,8 @@ helpText = "Use the \"help\" command to learn about using the bot, or check out 
 module.exports = (robot) ->
   # executes when any text is directed at the bot
   robot.respond /(.*)/i, (res) ->
+    console.log(res.message.user);
+    console.log(res.message.user.slack.profile);
     if /help/i.test(res.match[1])
       return
 
