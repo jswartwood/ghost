@@ -119,18 +119,12 @@ checkNetwork = (network) ->
     return null
 
 checkClass = (character) ->
-  classes = ['warlock', 'titan', 'hunter']
-  if character in classes
-    return character
-  else
-    return null
-
-  if slot is 'warlock'
-    return '1498876634'
-  else if slot is 'titan'
-    return '2465295065'
-  else if slot is 'hunter'
-    return '953998645'
+  if character is 'warlock'
+    return '2271682572'
+  else if character is 'titan'
+    return '671679327'
+  else if character is 'hunter'
+    return '3655393761'
   else
     return null
 
@@ -206,14 +200,23 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
 
   makeRequest bot, endpoint, (response) ->
     if !response
-      robot.send {room: bot.message.user.name, "unfurl_media": false}, "Something went wrong, no characters found for this user. #{helpText}"
+      robot.send {room: bot.message.user.name, "unfurl_media": false}, "Sorry, I cannot find any characters for this player."
       deferred.reject()
       return
 
     data = response.data
-    character = data.characters[0]
+
+    if characterClass != null
+      character = data.characters.filter((character) -> character.characterBase.classHash == characterClass)[0]
+    else
+      character = data.characters[0]
 
     console.log(data.characters)
+
+    if character == null
+        robot.send {room: bot.message.user.name, "unfurl_media": false}, "Sorry, I cannot find a character of the specified class."
+        deferred.reject()
+        return
 
     characterId = character.characterBase.characterId
     deferred.resolve(characterId)
@@ -234,7 +237,7 @@ getItemIdFromSummary = (bot, membershipType, playerId, characterId, weaponSlot) 
 
     item = items.filter(matchesBucketHash)
     if item.length is 0
-      robot.send {room: bot.message.user.name, "unfurl_media": false}, "Something went wrong, couldn't find the requested item for this character. #{helpText}"
+      robot.send {room: bot.message.user.name, "unfurl_media": false}, "Hm... I can't seem to find that item for your character. Very odd."
       deferred.reject()
       return
 
