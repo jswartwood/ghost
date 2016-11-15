@@ -28,6 +28,6 @@
     "jshint": "*"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "^7.x.x"
   }
 }
