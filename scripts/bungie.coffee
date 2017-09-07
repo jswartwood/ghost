@@ -266,7 +266,7 @@ getItemDetails = (bot, membershipType, playerId, characterId, itemInstanceId) ->
 # Sends GET request from an endpoint, needs a success callback
 makeRequest = (bot, endpoint, callback, params) ->
   BUNGIE_API_KEY = process.env.BUNGIE_API_KEY
-  baseUrl = 'https://www.bungie.net/Platform/Destiny/'
+  baseUrl = 'https://www.bungie.net/Platform/Destiny2/'
   trailing = '/'
   queryParams = if params then '?'+params else ''
   url = baseUrl+endpoint+trailing+queryParams
