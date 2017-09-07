@@ -198,7 +198,7 @@ getPlayerId = (res, membershipType, displayName, robot) ->
 # Gets characterId for last played character
 getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
   deferred = new Deferred()
-  endpoint = "#{membershipType}/Account/#{playerId}"
+  endpoint = "#{membershipType}/Profile/#{playerId}"
 
   makeRequest bot, endpoint, (response) ->
     if !response
@@ -229,7 +229,7 @@ getCharacterId = (bot, membershipType, playerId, characterClass, robot) ->
 # Gets itemInstanceId from Inventory Summary based on weaponSlot
 getItemIdFromSummary = (bot, membershipType, playerId, characterId, weaponSlot) ->
   deferred = new Deferred()
-  endpoint = "#{membershipType}/Account/#{playerId}/Character/#{characterId}/Inventory/Summary"
+  endpoint = "#{membershipType}/Profile/#{playerId}/Character/#{characterId}/Inventory/Summary"
 
   makeRequest bot, endpoint, (response) ->
     data = response.data
@@ -252,7 +252,7 @@ getItemIdFromSummary = (bot, membershipType, playerId, characterId, weaponSlot) 
 # returns item details
 getItemDetails = (bot, membershipType, playerId, characterId, itemInstanceId) ->
   deferred = new Deferred()
-  endpoint = "#{membershipType}/Account/#{playerId}/Character/#{characterId}/Inventory/#{itemInstanceId}"
+  endpoint = "#{membershipType}/Profile/#{playerId}/Character/#{characterId}/Inventory/#{itemInstanceId}"
   params = 'definitions=true'
 
   callback = (response) ->
